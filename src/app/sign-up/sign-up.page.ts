@@ -1,21 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  selector: 'app-sign-up',
+  templateUrl: './sign-up.page.html',
+  styleUrls: ['./sign-up.page.scss'],
 })
-export class HomePage {
+export class SignUpPage implements OnInit {
 
   constructor(private authService:AuthService,private router: Router, private alertCtrl:AlertController) { }
 
-  async logOut():Promise<void>{
-    this.authService.logOutUser().then(
+  ngOnInit() {
+  }
+
+  async signUpUser(form):Promise<void>{
+    this.authService.signUpUser(form.value.email, form.value.password).then(
       ()=>{
-        this.router.navigateByUrl('login');
+        this.router.navigateByUrl('home');
       },
       async error => {
         const alert = await this.alertCtrl.create({
@@ -26,5 +29,4 @@ export class HomePage {
       }
     );
   }
-
 }
