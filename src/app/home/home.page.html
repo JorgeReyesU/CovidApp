@@ -1,13 +1,14 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Home
-    </ion-title>
+    <ion-title>Home</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div style="text-align: center;margin: auto;">
+  <!-- <div style="text-align: center;margin: auto;">
     <ion-button (click)="logOut()">Log out</ion-button>
-  </div>
+  </div> -->
 </ion-content>
