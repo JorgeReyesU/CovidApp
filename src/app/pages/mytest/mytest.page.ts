@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from '../../services/firebase.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
-interface StudentData {
-  Name: string;
-  Age: number;
-  Address: string;
+interface TestData {
+  Q1: number;
+  Q2: number;
+  Q3: number;
+  Q4: number;
+  Q5: number;
 }
 @Component({
   selector: 'app-mytest',
@@ -16,45 +18,49 @@ interface StudentData {
 
 export class MytestPage {
 
-  studentList = [];
-  studentData: StudentData;
-  studentForm: FormGroup;
+  testList = [];
+  testData: TestData;
+  testForm: FormGroup;
 
   constructor(
     private firebaseService: FirebaseService,
     public fb: FormBuilder
   ) {
-    this.studentData = {} as StudentData;
+    this.testData = {} as TestData;
   }
 
   ngOnInit() {
 
-    this.studentForm = this.fb.group({
-      Name: ['', [Validators.required]],
-      Age: ['', [Validators.required]],
-      Address: ['', [Validators.required]]
+    this.testForm = this.fb.group({
+      Q1: ['', [Validators.required]],
+      Q2: ['', [Validators.required]],
+      Q3: ['', [Validators.required]],
+      Q4: ['', [Validators.required]],
+      Q5: ['', [Validators.required]]
     })
 
-    this.firebaseService.read_students().subscribe(data => {
+    this.firebaseService.read_test().subscribe(data => {
 
-      this.studentList = data.map(e => {
+      this.testList = data.map(e => {
         return {
           id: e.payload.doc.id,
           isEdit: false,
-          Name: e.payload.doc.data()['Name'],
-          Age: e.payload.doc.data()['Age'],
-          Address: e.payload.doc.data()['Address'],
+          Q1: e.payload.doc.data()['Q1'],
+          Q2: e.payload.doc.data()['Q2'],
+          Q3: e.payload.doc.data()['Q3'],
+          Q4: e.payload.doc.data()['Q4'],
+          Q5: e.payload.doc.data()['Q5'],
         };
       })
-      console.log(this.studentList);
+      console.log(this.testList);
 
     });
   }
 
   CreateRecord() {
-    console.log(this.studentForm.value);
-    this.firebaseService.create_student(this.studentForm.value).then(resp => {
-      this.studentForm.reset();
+    console.log(this.testForm.value);
+    this.firebaseService.create_test(this.testForm.value).then(resp => {
+      this.testForm.reset();
     })
       .catch(error => {
         console.log(error);
@@ -62,22 +68,26 @@ export class MytestPage {
   }
 
   RemoveRecord(rowID) {
-    this.firebaseService.delete_student(rowID);
+    this.firebaseService.delete_test(rowID);
   }
 
   EditRecord(record) {
     record.isEdit = true;
-    record.EditName = record.Name;
-    record.EditAge = record.Age;
-    record.EditAddress = record.Address;
+    record.EditQ1 = record.Q1;
+    record.EditQ2 = record.Q2;
+    record.EditQ3 = record.Q3;
+    record.EditQ4 = record.Q4;
+    record.EditQ5 = record.Q5;
   }
 
   UpdateRecord(recordRow) {
     let record = {};
-    record['Name'] = recordRow.EditName;
-    record['Age'] = recordRow.EditAge;
-    record['Address'] = recordRow.EditAddress;
-    this.firebaseService.update_student(recordRow.id, record);
+    record['Q1'] = recordRow.EditQ1;
+    record['Q2'] = recordRow.EditQ2;
+    record['Q3'] = recordRow.EditQ3;
+    record['Q4'] = recordRow.EditQ4;
+    record['Q5'] = recordRow.EditQ5;
+    this.firebaseService.update_test(recordRow.id, record);
     recordRow.isEdit = false;
   }
 

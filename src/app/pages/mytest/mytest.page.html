@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="warning">
     <ion-title>
-      Student Register
+      My Test
     </ion-title>
     <ion-buttons slot="start">
       <ion-menu-button menu="main-menu"></ion-menu-button>
@@ -11,25 +11,51 @@
 
 <ion-content [fullscreen]="true" class="ion-padding">
 
-  <form [formGroup]="studentForm" (ngSubmit)="CreateRecord()">
-
+  <form [formGroup]="testForm" (ngSubmit)="CreateRecord()">
+    <ion-title>
+      Respuesta afirmativa: 1
+    </ion-title>
+    <ion-title>
+      Respuesta negativa: 0
+    </ion-title>
+    <br>
+    <ion-label>¿Tienes sensación de falta de aire de inicio brusco (en ausencia de cualquier otra patología que justifique este síntoma)?</ion-label>
     <ion-item>
-      <ion-label position="floating">Name</ion-label>
-      <ion-input formControlName="Name"></ion-input>
+      <ion-input formControlName="Q1"></ion-input>
     </ion-item>
-
+    <br>
+    <br>
+    <ion-label>¿Tienes fiebre? (+37.7ºC)</ion-label>
     <ion-item>
-      <ion-label position="floating">Age</ion-label>
-      <ion-input formControlName="Age"></ion-input>
+      <ion-input formControlName="Q2"></ion-input>
     </ion-item>
+    <br>
+    <br>
 
+    <ion-label>¿Tienes tos seca y persistente?</ion-label>
     <ion-item>
-      <ion-label position="floating">Address</ion-label>
-      <ion-input formControlName="Address"></ion-input>
+      <ion-input formControlName="Q3"></ion-input>
     </ion-item>
+    <br>
+    <br>
+
+    <ion-label>¿Has tenido contacto estrecho con algún paciente positivo confirmado?</ion-label>
+    <ion-item>
+      <ion-input formControlName="Q4"></ion-input>
+    </ion-item>
+    <br>
+    <br>
+
+    <ion-label>¿Llevas más de 20 días con estos síntomas?</ion-label>
+    <ion-item>
+      <ion-input formControlName="Q5"></ion-input>
+    </ion-item>
+    <br>
+    <br>
+
 
     <ion-item>
-      <ion-button (click)="CreateRecord()" [disabled]="studentForm.invalid">
+      <ion-button (click)="CreateRecord()" [disabled]="testForm.invalid">
         <ion-icon size="small" slot="icon-only" name="add"></ion-icon>
         &nbsp;Create Record
       </ion-button>
@@ -38,14 +64,19 @@
   </form>
 
 
-  <ion-card *ngFor="let item of studentList" color="primary">
+  <ion-card *ngFor="let item of testList" color="primary">
     <span *ngIf="!item.isEdit; else elseBlock">
+
       <ion-card-header>
-        <ion-card-title>{{item.Name}} of {{item.Age}} years</ion-card-title>
-        <ion-card-subtitle>From: {{item.Address}}</ion-card-subtitle>
+        <ion-card-title>Suma los siguientes puntajes, si el resultado es mayor a 30 entonces es posible que estes contagiado.</ion-card-title>
+        <ion-card-subtitle>{{item.Q1 === '1' ? '60' : '0'}}</ion-card-subtitle>
+        <ion-card-subtitle>{{item.Q2 === '1' ? '15' : '0'}}</ion-card-subtitle>
+        <ion-card-subtitle>{{item.Q3 === '1' ? '15' : '0'}}</ion-card-subtitle>
+        <ion-card-subtitle>{{item.Q4 === '1' ? '29' : '0'}}</ion-card-subtitle>
+        <ion-card-subtitle>{{item.Q5 === '1' ? '-15' : '0'}}</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
-
+      
         <ion-button shape="round" color="secondary" size="small" (click)="EditRecord(item)">
           <ion-icon size="small" slot="icon-only" name="create"></ion-icon>
 
@@ -80,17 +111,26 @@
       </ion-card-header>
       <ion-card-content>
         <ion-item>
-          <ion-label><strong>Name</strong></ion-label>
-          <ion-input type="text" [(ngModel)]="item.EditName"></ion-input>
+          <ion-label><strong>¿Tienes sensación de falta de aire de inicio brusco (en ausencia de cualquier otra patología que justifique este síntoma)?</strong></ion-label>
+          <ion-input type="text" [(ngModel)]="item.EditQ1"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label><strong>Age</strong></ion-label>
-          <ion-input type="text" [(ngModel)]="item.EditAge"></ion-input>
+          <ion-label><strong>¿Tienes fiebre?</strong></ion-label>
+          <ion-input type="text" [(ngModel)]="item.EditQ2"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label><strong>Address</strong></ion-label>
-          <ion-input type="text" [(ngModel)]="item.EditAddress"></ion-input>
+          <ion-label><strong>¿Tienes tos seca y persistente?</strong></ion-label>
+          <ion-input type="text" [(ngModel)]="item.EditQ3"></ion-input>
         </ion-item>
+        <ion-item>
+          <ion-label><strong>¿Has tenido contacto estrecho con algún paciente positivo confirmado?</strong></ion-label>
+          <ion-input type="text" [(ngModel)]="item.EditQ4"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label><strong>¿Llevas más de 20 días con estos síntomas?</strong></ion-label>
+          <ion-input type="text" [(ngModel)]="item.EditQ5"></ion-input>
+        </ion-item>
+
       </ion-card-content>
     </ng-template>
   </ion-card>

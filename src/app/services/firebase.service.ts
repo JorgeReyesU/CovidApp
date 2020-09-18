@@ -6,25 +6,25 @@ import { AngularFirestore } from '@angular/fire/firestore';
 })
 export class FirebaseService {
 
-  collectionName = 'Students';
+  collectionName = 'Test';
 
   constructor(
     private firestore: AngularFirestore
   ) { }
 
-  create_student(record) {
+  create_test(record) {
     return this.firestore.collection(this.collectionName).add(record);
   }
 
-  read_students() {
+  read_test() {
     return this.firestore.collection(this.collectionName).snapshotChanges();
   }
 
-  update_student(recordID, record) {
+  update_test(recordID, record) {
     this.firestore.doc(this.collectionName + '/' + recordID).update(record);
   }
 
-  delete_student(record_id) {
+  delete_test(record_id) {
     this.firestore.doc(this.collectionName + '/' + record_id).delete();
   }
 }
