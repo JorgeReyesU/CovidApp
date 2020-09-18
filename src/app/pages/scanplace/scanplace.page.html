@@ -1,12 +1,45 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>scanplace</ion-title>
+    <ion-title>ScanPlace</ion-title>
     <ion-buttons slot="start">
       <ion-menu-button menu="main-menu"></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <div style="text-align: center;margin: auto;">
+    <h1>Scan Code</h1>
+    <br>
+  <ion-button color="primary" (click)="scanBar()">
+    <ion-icon name="scan-outline"></ion-icon>
+  </ion-button>
+  
 
+  <div *ngIf="scannedData">
+    <p>
+      Scanned Code Text : <b>{{ scannedData["text"] }}</b>
+    </p>
+    <p>
+      Scanned Code Format : <b>{{ scannedData["format"] }}</b>
+    </p>
+  </div>
+
+  <br>
+  <br>
+  <br>
+  <br>
+  <h1>Generate QR Code</h1>
+  <ion-input placeholder="Enter Input" [(ngModel)]="encodedData"></ion-input>
+
+  <ion-button color="success" (click)="generateBar()">
+    <ion-icon name="qr-code-outline"></ion-icon>
+  </ion-button>
+</div>
 </ion-content>
